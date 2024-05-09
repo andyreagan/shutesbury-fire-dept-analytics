@@ -1,3 +1,5 @@
+-- .read basic_queries.sql
+
 CREATE TABLE Inc_main_extended AS
 SELECT
     Inc_main.*,
@@ -269,3 +271,9 @@ LEFT JOIN
 -- and count the number of matches
 -- so we get a view of all time, but also with a %
 -- of course, this relies on having a good retire_date
+
+EXPORT DATABASE 'framework/docs/data' (
+    FORMAT PARQUET,
+    COMPRESSION ZSTD,
+    ROW_GROUP_SIZE 100_000
+);

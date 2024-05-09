@@ -1,3 +1,5 @@
+-- .read load.sql
+
 CREATE TABLE Act_det AS SELECT * FROM read_csv(
     'firehouse-exports/Act_det.TXT', 
     header=false, 

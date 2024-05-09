@@ -1,0 +1,10 @@
+COPY Act_det FROM 'framework/docs/data/act_det.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Act_det_extended FROM 'framework/docs/data/act_det_extended.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Act_det_extended_firstcall FROM 'framework/docs/data/act_det_extended_firstcall.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Act_main FROM 'framework/docs/data/act_main.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Inc_main FROM 'framework/docs/data/inc_main.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Inc_main_extended FROM 'framework/docs/data/inc_main_extended.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Inc_unit FROM 'framework/docs/data/inc_unit.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Lkp_inci FROM 'framework/docs/data/lkp_inci.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Lkp_stf FROM 'framework/docs/data/lkp_stf.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
+COPY Stf_main FROM 'framework/docs/data/stf_main.parquet' (FORMAT 'parquet', ROW_GROUP_SIZE 100000, COMPRESSION 'ZSTD');
