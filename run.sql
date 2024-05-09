@@ -20,6 +20,7 @@ SELECT
         END AS Inci_collapsed,  
     -- computed times AND response numbers:
     ((Inc_main.Arv_date + Inc_main.Arv_time) - (Inc_main.Alm_date + Inc_main.Alm_time)) AS Resp_time, 
+    epoch(Resp_time)/60 as Resp_time_minutes,
     (Inc_main.Per_supp + Inc_main.Per_ems + Inc_main.Per_rescue + Inc_main.Per_other) AS NumRespondingBase, 
     coalesce(Act_det_station.responding, 0) AS NumRespondingPersonnel,
     coalesce(Act_det.responding, 0) AS NumRespondingPersonnelScene,
@@ -64,7 +65,7 @@ LEFT JOIN
 SELECT  
     Inci_type, 
     Descript, 
-    round(avg(date_part('minutes', Resp_time))*10)/10 AS Resp_time, 
+    round(avg(Resp_time_minutes)*10)/10 AS Resp_time, 
     round(avg(NumRespondingBase)*10)/10 AS Responding, 
     count(*) AS Num_calls 
 FROM 
@@ -79,7 +80,7 @@ ORDER BY 1;
 
 SELECT
     Inci_collapsed, 
-    round(avg(date_part('minutes', Resp_time))*10)/10 AS Resp_time, 
+    round(avg(Resp_time_mintues)*10)/10 AS Resp_time, 
     round(avg(NumRespondingBase)*10)/10 AS Responding,  
     count(*) AS Num_calls 
 FROM Inc_main_extended 
