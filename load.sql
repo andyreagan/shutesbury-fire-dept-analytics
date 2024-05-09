@@ -1,7 +1,7 @@
 CREATE TABLE Act_det AS SELECT * FROM read_csv(
     'firehouse-exports/Act_det.TXT', 
     header=false, 
-    names=['Activ_id', 'Staff_id', 'Hours', 'Act_code', 'Hrs_paid']
+    names=['Activ_id', 'Staff_id', 'Hours', 'Act_code', 'Hrs_paid', 'Unit']
     -- auto-detect good enough here
     -- varchar   │ varchar  │ double │ varchar  │  double
     -- types=['VARCHAR', 'VARCHAR', 'FLOAT', 'VARCHAR', 'FLOAT']
