@@ -265,7 +265,7 @@ LEFT JOIN
     ON FirstCall.Staff_id = Act_det.Staff_id
 ;
 
--- join staff to
+-- idea: join staff to
 -- all calls
 -- based on alm_date >= first_call
 -- and alm_date <= retire_date

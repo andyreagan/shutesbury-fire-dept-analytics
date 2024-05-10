@@ -6,7 +6,9 @@ sql:
   all_calls: ./data/inc_main_extended.parquet
 ---
 
-# Calls 
+# 🚨 Calls 🚨
+
+Filters apply to all data/graphs below them. These date filters apply to all charts on the page.
 
 ```js
 const start = view(Inputs.date({label: "Start", value: "2020-01-01"}))
@@ -58,24 +60,69 @@ where
   and alm_date <= ${end}
 ```
 
+```js
+const n_mutual_aid = [...data].filter((d) => !d.In_town).length.toLocaleString("en-US")
+```
+
+```js
+const total_calls = [...data].length.toLocaleString("en-US")
+```
+
 <!-- Cards with big numbers -->
 
 <div class="grid grid-cols-4">
   <div class="card">
     <h2>Total calls 🆘</h2>
-    <span class="big">${[...data].length.toLocaleString("en-US")}</span>
+    <span class="big">${total_calls.toLocaleString("en-US")}</span>
   </div>
   <div class="card">
-    <h2>Response time ⏰</h2>
-    <span class="big">${d3.mean([...data].map(d => d.Resp_time_minutes)).toLocaleString("en-US")}</span>
+    <h2>Mutual Aid calls 🏠</h2>
+    <span class="big">${n_mutual_aid}</span>
+  </div>
+</div>
+
+For the following charts, we can include or exclude the ${n_mutual_aid} mutual aid calls.
+
+```js
+const mutual_aid = view(Inputs.toggle({label: "Include Mutual Aid", value: false}));
+```
+
+Some responders come to the station, 
+but are too late to make it onto an appartus that is responding.
+If they stand by and wait to see if additional support is needed, 
+these responses get recorded.
+While these responses do get recorded,
+we can exclude these from our count of responders for a given call.
+
+```js
+const scene_only = view(Inputs.toggle({label: "Exclude Station-Only Response", value: true}));
+```
+
+```js
+const data_filtered = [...data].filter(d => mutual_aid ? true : d.In_town)
+```
+
+```js
+const respondingColumn = scene_only ? "RespondingScene" : "RespondingAny"
+```
+
+<div class="grid grid-cols-4">
+  <div class="card">
+    <h2>Calls remaining</h2>
+    <span class="big">${(total_calls - (mutual_aid ? 0 : n_mutual_aid)).toLocaleString("en-US")}</span>
   </div>
   <div class="card">
-    <h2>Responders 🧑‍🚒</h2>
-    <span class="big">${d3.mean([...data].map(d => d.NumRespondingPersonnelScene)).toLocaleString("en-US")}</span>
+    <h2>Total number of responses</h2>
+    <span class="big">${d3.sum(data_filtered.map(d => scene_only ? d.NumRespondingPersonnelScene : d.NumRespondingBase)).toLocaleString("en-US")}</span>
+  </div>  
+  <div class="card">
+    <h2>Avg Response time ⏰</h2>
+    <span class="big">${Math.round(d3.mean(data_filtered.map(d => d.Resp_time_minutes))*10)/10}</span>
+    <span class="muted"> minutes</span>
   </div>
   <div class="card">
-    <h2>Mutual Aid calls</h2>
-    <span class="big">${[...data].filter((d) => !d.In_town).length.toLocaleString("en-US")}</span>
+    <h2>Avg # Responders 🧑‍🚒</h2>
+    <span class="big">${d3.mean(data_filtered.map(d => scene_only ? d.NumRespondingPersonnelScene : d.NumRespondingBase)).toLocaleString("en-US")}</span>
   </div>
 </div>
 
@@ -97,21 +144,9 @@ function callTimeline(d, {width} = {}) {
 
 <div class="grid grid-cols-1">
   <div class="card">
-    ${resize((width) => callTimeline(data, {width}))}
+    ${resize((width) => callTimeline(data_filtered, {width}))}
   </div>
 </div>
-
-```js
-const mutual_aid = view(Inputs.toggle({label: "Include Mutual Aid", value: false}));
-```
-
-```js
-const scene_only = view(Inputs.toggle({label: "Exclude Station-Only Response", value: true}));
-```
-
-```js
-const respondingColumn = scene_only ? "RespondingScene" : "RespondingAny"
-```
 
 ```sql id=grouped
 SELECT  
@@ -130,8 +165,6 @@ WHERE
 GROUP BY 1 -- 2
 ORDER BY 1
 ```
-
-
 
 ```js
 function callTypeChart(d, {width}) {
@@ -250,12 +283,12 @@ ORDER BY 1;
 ```js
 function callTypeChart4(d, {width}) {
   return Plot.plot({
-    title: "Number of responders",
+    title: "Number of calls by count of responders",
     width,
     height: 300,
     marginTop: 0,
     marginLeft: 20,
-    x: {grid: true, label: "Number of Calls"},
+    x: {grid: true, label: "Number of Responders"},
     y: {label: null},
     color: {scheme: "reds", legend: false, reverse: true},
     marks: [
