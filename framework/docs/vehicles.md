@@ -34,7 +34,7 @@ order by 1, 2
 ${
     resize((width) => Plot.plot({
       title: "Calls by year for each apparatus",
-      subtitle: "Since 2020",
+      subtitle: "2020-2023",
       width,
       color: {
         scheme: "observable10", 
@@ -46,6 +46,39 @@ ${
       ]
     }))
   }
+
+```sql id=average_count_by_year
+select 
+  Unit,
+  floor(count(*)/4) as Num_calls
+from 
+  Inc_unit
+inner join
+  Inc_main_extended Inc_main
+  on
+    Inc_main.Inci_no = Inc_unit.Inci_no
+WHERE    
+  year(Inc_unit.alm_date) >= 2020
+  AND year(Inc_unit.alm_date) <= 2023
+  AND In_town in (true, ${!mutual_aid})
+group by 1
+order by 1
+```
+
+Average calls per year 2020-2023:
+
+${Inputs.table(average_count_by_year, {
+  columns: ["Unit", "Num_calls"],
+  align: {Unit: "left", Num_calls: "left"},
+  header: {Unit: "Unit", Num_calls: "Number Calls Responded Per Year (floor)"},
+  format: {Num_calls: sparkbar(d3.max(num_calls_by_unit, d => d.Num_calls))},
+  rows: 30,
+  // width: width,
+  // maxWidth: width,
+  sort: "Num_calls", 
+  reverse: true
+})
+}
 
 Filter by time range:
 
@@ -389,7 +422,7 @@ function sparkbar(max) {
     font: 10px/1.6 var(--sans-serif);
     width: ${100 * x / max}%;
     float: left;
-    padding-right: 3px;
+    padding-right: 2px;
     box-sizing: border-box;
     overflow: visible;
     display: flex;
