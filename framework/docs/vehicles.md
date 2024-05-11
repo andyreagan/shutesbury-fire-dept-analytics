@@ -4,7 +4,7 @@ title: Apparatus
 toc: false
 sql:
   Inc_main_extended: ./data/inc_main_extended.parquet
-  Inc_unit: ./data/Inc_unit.parquet
+  Inc_unit: ./data/Inc_unit_extended.parquet
 ---
 
 # Apparatus
@@ -16,7 +16,7 @@ const mutual_aid = view(Inputs.toggle({label: "Include Mutual Aid", value: false
 ```sql id=count_by_year
 select 
   year(Inc_unit.alm_date) as yr,
-  Unit,
+  Unit_combined As Unit,
   count(*) as ct
 from 
   Inc_unit
@@ -49,7 +49,7 @@ ${
 
 ```sql id=average_count_by_year
 select 
-  Unit,
+  Unit_combined As Unit,
   floor(count(*)/4) as Num_calls
 from 
   Inc_unit
@@ -102,7 +102,7 @@ The following charts all use this time range (and the mutual aid filter at the t
 
 ```sql id=num_calls_by_unit
 select 
-  Unit,
+  Unit_combined As Unit,
   count(*) as Num_calls
 from 
   Inc_unit
@@ -247,7 +247,7 @@ ${resize((width) => callTypeChart2(n_units_per_call_grouped, {width}))}
 
 ```sql id=calls_by_unit
 select 
-  Unit,
+  Unit_combined As Unit,
   Inc_main.Inci_collapsed,
   count(*) as Num_calls
 from 
@@ -309,7 +309,7 @@ from
       Inci_no, 
       string_agg(Unit, ', ') as Units 
     from 
-      (select Unit, Inci_no from Inc_unit order by 1 desc) x
+      (select Unit_combined As Unit, Inci_no from Inc_unit order by 1 desc) x
     group by 1
   ) Inc_unit
 left join

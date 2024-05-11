@@ -272,6 +272,18 @@ LEFT JOIN
 -- and count the number of matches
 -- so we get a view of all time, but also with a %
 -- of course, this relies on having a good retire_date
+-- too complex!
+
+CREATE TABLE Inc_unit_extended AS
+SELECT 
+    *,
+    CASE 
+        WHEN Unit in ('33BRU1', '33BRU2') THEN '33BRU'
+        WHEN Unit in ('33ENG1', '33ENG2') THEN '33ENG'
+        ELSE Unit
+        END AS Unit_combined
+FROM 
+    Inc_unit;
 
 EXPORT DATABASE 'framework/docs/data' (
     FORMAT PARQUET,
