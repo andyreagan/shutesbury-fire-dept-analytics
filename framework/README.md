@@ -10,6 +10,16 @@ Then visit <http://localhost:3000> to preview your project.
 
 For more, see <https://observablehq.com/framework/getting-started>.
 
+## Deployment
+
+This project is configured to automatically deploy to GitHub Pages via GitHub Actions. When you push changes to the `main` branch, the workflow will:
+
+1. Install dependencies
+2. Build the static site
+3. Deploy to GitHub Pages
+
+No manual deployment steps are needed!
+
 ## Project structure
 
 A typical Framework project looks like this:
@@ -48,6 +58,6 @@ A typical Framework project looks like this:
 | `npm install`            | Install or reinstall dependencies                        |
 | `npm run dev`        | Start local preview server                               |
 | `npm run build`      | Build your static site, generating `./dist`              |
-| `npm run deploy`     | Deploy your project to Observable                        |
+| `npm run deploy`     | Deploy your project to Observable (deprecated for this project) |
 | `npm run clean`      | Clear the local data loader cache                        |
 | `npm run observable` | Run commands like `observable help`                      |
