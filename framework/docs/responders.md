@@ -4,7 +4,7 @@ title: Responders
 toc: false
 sql:
   Inc_main_extended: ./data/inc_main_extended.parquet
-  Act_det_extended: ./data/Act_det_extended.parquet
+  Act_det_extended: ./data/act_det_extended.parquet
 ---
 
 # Responders
