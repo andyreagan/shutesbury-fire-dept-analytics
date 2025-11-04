@@ -4,7 +4,7 @@ title: Apparatus
 toc: false
 sql:
   Inc_main_extended: ./data/inc_main_extended.parquet
-  Inc_unit: ./data/Inc_unit_extended.parquet
+  Inc_unit: ./data/inc_unit_extended.parquet
 ---
 
 # Apparatus
