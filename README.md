@@ -1,12 +1,13 @@
 # Shutesbury Fire Department Analytics
 
-Analytics dashboard for Shutesbury Fire Department call data, built with [Observable Framework](https://observablehq.com/framework).
+Analytics dashboard for Shutesbury Fire Department call data, built with 
+[Observable Framework](https://observablehq.com/framework).
 
 ## 🚀 Deployment
 
-This project automatically builds and deploys to GitHub Pages when changes are pushed to the `main` branch.
-
-**Live Site:** `https://andyreagan.github.io/shutesbury-fire-dept-analytics/`
+This project automatically builds and deploys to GitHub Pages when changes are pushed to the `main` branch,
+and is served on https://sfd.andyreagan.com/.
+You can also view it directly on github pages at https://andyreagan.github.io/shutesbury-fire-dept-analytics/.
 
 ## 📦 Local Development
 
@@ -33,4 +34,5 @@ This generates the static HTML site in the `framework/dist/` directory.
 
 ## 🔧 Technical Details
 
-The project uses Observable Framework with local npm dependencies for d3 and Observable Plot, ensuring builds work in restricted network environments.
+The project uses Observable Framework with local npm dependencies for d3 and Observable Plot, 
+ensuring builds work in restricted network environments.
