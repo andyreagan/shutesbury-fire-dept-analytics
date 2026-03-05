@@ -6,7 +6,7 @@ Analytics dashboard for Shutesbury Fire Department call data, built with [Observ
 
 This project automatically builds and deploys to GitHub Pages when changes are pushed to the `main` branch.
 
-**Live Site:** `https://[your-username].github.io/shutesbury-fire-dept-analytics/`
+**Live Site:** `https://andyreagan.github.io/shutesbury-fire-dept-analytics/`
 
 ## 📦 Local Development
 
